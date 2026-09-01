@@ -4,7 +4,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import pages.MainPage;
 import pages.OrderPage;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OrderTests extends BaseTest {
@@ -26,74 +25,50 @@ public class OrderTests extends BaseTest {
             String comment) {
 
         // Открываем главную страницу
-
         MainPage mainPage = new MainPage(driver);
-
         mainPage.waitForLoad();
 
         // Нажимаем "Заказать"
-
         if (useTopButton) {
-
             mainPage.clickTopOrderButton();
-
             System.out.println("Клик по верхней кнопке 'Заказать'");
-
         } else {
-
             mainPage.clickBottomOrderButton();
-
             System.out.println("Клик по нижней кнопке 'Заказать'");
         }
 
         // Работаем с формой заказа
-
         OrderPage orderPage = new OrderPage(driver);
-
         orderPage.waitForLoad();
 
         // === Первая форма ===
-
         orderPage.fillName(firstName);
-
         orderPage.fillLastName(lastName);
-
         orderPage.fillAddress(address);
-
         orderPage.fillMetroStation(metroStation);
-
         orderPage.fillPhone(phone);
 
         // Переходим ко второй форме
         orderPage.clickNextButton();
 
         // === Вторая форма ===
-
         orderPage.fillDeliveryDate(deliveryDate);
-
         orderPage.selectRentalPeriod(rentalPeriod);
-
         orderPage.selectColor(color);
-
         orderPage.fillComment(comment);
 
         // Нажимаем "Заказать"
-
         orderPage.clickOrderButton();
 
         // Подтверждаем заказ
-
         orderPage.clickConfirmButton();
 
         // Проверяем результат
-
         assertTrue(
                 orderPage.isSuccessMessageDisplayed(),
                 "Сообщение об успешном заказе не отображается"
         );
-
         String successMessage = orderPage.getSuccessMessage();
-
         assertTrue(
                 successMessage.contains("Заказ оформлен"),
                 "Сообщение содержит неправильный текст: "
